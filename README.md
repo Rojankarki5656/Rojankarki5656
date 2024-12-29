@@ -1,11 +1,11 @@
 # Hi there! 👋 Welcome to my GitHub Profile
 
-[![GitHub followers](https://img.shields.io/github/followers/yourusername?label=Follow%20Me&style=social)](https://github.com/yourusername)
-[![Visitors](https://visitor-badge.glitch.me/badge?page_id=yourusername.yourusername)]
+[![GitHub followers](https://img.shields.io/github/followers/Rojankarki5656?label=Follow%20Me&style=social)](https://github.com/Rojankarki5656)
+[![Visitors](https://visitor-badge.glitch.me/badge?page_id=Rojankarki5656.Rojankarki5656)]
 
 ## About Me 🧑‍💻
 
-Hi! I'm **Your Name**, a passionate developer, problem solver, and tech enthusiast. I love exploring new technologies and building projects that make an impact. My areas of interest include:
+Hi! I'm **Rojan Karki**, a passionate developer, problem solver, and tech enthusiast. I love exploring new technologies and building projects that make an impact. My areas of interest include:
 
 - 🌐 Web Development
 - 📱 Mobile App Development (Flutter)
@@ -28,7 +28,7 @@ Hi! I'm **Your Name**, a passionate developer, problem solver, and tech enthusia
 ### Tools
 ![VS Code](https://img.shields.io/badge/-VS%20Code-007ACC?style=flat-square&logo=visual-studio-code&logoColor=white)
 ![Git](https://img.shields.io/badge/-Git-F05032?style=flat-square&logo=git&logoColor=white)
-![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![MySQL](https://img.shields.io/badge/-MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
 
 ## Projects 💡
 
@@ -43,16 +43,16 @@ An e-commerce website where users can purchase custom string art pieces. Visit: 
 
 ## Let's Connect 🌍
 
-[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/yourprofile)
+[![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/rojan-karki)
 [![Twitter](https://img.shields.io/badge/-Twitter-1DA1F2?style=flat-square&logo=twitter&logoColor=white)](https://twitter.com/yourprofile)
-[![Portfolio](https://img.shields.io/badge/-Portfolio-FF5722?style=flat-square&logo=google-chrome&logoColor=white)](https://yourportfolio.com)
+[![Portfolio](https://img.shields.io/badge/-Portfolio-FF5722?style=flat-square&logo=google-chrome&logoColor=white)](https://karkiom.com.np)
 
 ---
 
 ### Stats 📈
 
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=yourusername&show_icons=true&theme=radical)
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=yourusername&layout=compact&theme=radical)
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=Rojankarki5656&show_icons=true&theme=radical)
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=Rojankarki5656&layout=compact&theme=radical)
 
 ---
 
