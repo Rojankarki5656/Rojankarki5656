@@ -13,16 +13,44 @@ export const orders: Order[] = []
 export async function getOrderById(id: string): Promise<Order | null> {
   const { data, error } = await supabase
     .from("orders")
-    .select("*")
+    .select(`items,
+      subtotal,
+      total,
+      status,
+      paymentmethod,
+      notes,
+      createdat,
+      updateat,
+      customers:customer_id(*)`)
     .eq("id", id)
     .single();
-
   if (error) {
     console.error("Error fetching order:", error);
     return null;
   }
 
-  return data as Order;
+  return {
+    id: id,
+    items: data.items,
+    subtotal: data.subtotal,
+    total: data.total,
+    status: data.status,
+    paymentMethod: data.paymentmethod,
+    notes: data.notes,
+    createdAt: data.createdat,
+    updatedAt: data.updateat,
+    customer: {
+      firstName: data.customers.name.split(' ')[0],
+      lastName: data.customers.name.split(' ')[1],
+      email: data.customers.email,
+      phone: data.customers.phone,
+      address: data.customers.address,
+      city: data.customers.city,
+      state: data.customers.state,
+      postalCode: data.customers.postalcode,
+      country: data.customers.country,
+    }
+  } as Order;
 }
 
 
@@ -32,37 +60,63 @@ export async function createOrder(orderData: Omit<Order, "id" | "createdAt" | "u
     // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    // Generate unique order ID
+    // Insert new customer into Supabase
+    const { data: customerData, error: customerError } = await supabase
+      .from("customers")
+      .insert([
+        {
+          name: `${orderData.customer.firstName} ${orderData.customer.lastName}`,
+          email: orderData.customer.email,
+          phone: orderData.customer.phone,
+          address: orderData.customer.address,
+          city: orderData.customer.city,
+          state: orderData.customer.state,
+          postalcode: orderData.customer.postalCode,
+          country: orderData.customer.country,
+          created_at: new Date().toISOString(),
+        }
+      ])
+      .select()
+      .single();
+
+    if (customerError) throw customerError;
+
+    console.log("✅ Customer Created:", customerData);
+
+    // Get the newly inserted customer's ID
+    const customerId = customerData.id; // Ensure `id` exists in the `customers` table
+
+    // Generate a unique order ID (if necessary)
     const orderId = `ORD-${Date.now()}`;
 
-    // Insert into Supabase
-    const { data, error } = await supabase
+    // Insert the order into Supabase
+    const { data: orderDataResponse, error: orderError } = await supabase
       .from("orders")
       .insert([
         {
           id: orderId, // Custom order ID
-          customer: orderData.customer, // JSONB field
-          items: orderData.items, // JSONB field
+          customer_id: customerId, // Store only customer ID
+          items: JSON.stringify(orderData.items), // Convert to JSON string if stored as JSONB
           subtotal: orderData.subtotal,
           total: orderData.total,
-          paymentmethod: orderData.paymentMethod,
+          paymentmethod: orderData.paymentMethod, // Ensure this column name is correct
           notes: orderData.notes,
-          status: orderData.status || "pending", // Default status if empty
+          status: orderData.status || "pending", // Default status
           createdat: new Date().toISOString(),
-          updatedat: new Date().toISOString(),
+          updateat: new Date().toISOString(),
         }
       ])
       .select()
       .single(); // Fetch the inserted row
 
-    if (error) throw error;
+    if (orderError) throw orderError;
 
-    console.log("✅ Order Created:", data);
+    console.log("✅ Order Created:", orderDataResponse);
 
-    // Redirect after order is successfully created
+    // Redirect after order creation
     window.location.href = `/checkout/success?orderId=${orderId}`;
 
-    return data;
+    return orderDataResponse;
   } catch (error) {
     console.error("❌ Error creating order:", error);
     return null;

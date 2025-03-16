@@ -23,18 +23,8 @@ export type ProductReview = {
 
 export type Order = {
   id: string
-  customer: {
-    firstName: string
-    lastName: string
-    email: string
-    phone: string
-    address: string
-    city: string
-    state: string
-    postalCode: string
-    country: string
-  }
-  items: OrderItem[]
+  customer: Customer;
+  items: OrderItem;
   subtotal: number
   total: number
   status: string
@@ -57,4 +47,14 @@ export type GalleryImage = {
   title: string
   description?: string
 }
-
+export type Customer = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+};

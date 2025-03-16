@@ -16,24 +16,23 @@ export default function CheckoutSuccessPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-  const fetchOrder = async () => {
-    if (!orderId) return
+    const fetchOrder = async () => {
+      if (!orderId) return
 
-    try {
-      console.log(orderId); // ✅ Logging before fetching
-      const orderData = await getOrderById(orderId)
-      setOrder(orderData)
-      console.log("Fetched order:", orderData) // ✅ Now logging after fetching
-    } catch (error) {
-      console.error("Failed to fetch order:", error)
-    } finally {
-      setLoading(false)
+      try {
+        console.log(orderId); // ✅ Logging before fetching
+        const orderData = await getOrderById(orderId)
+        setOrder(orderData)
+        console.log("Fetched order:", orderData) // ✅ Now logging after fetching
+      } catch (error) {
+        console.error("Failed to fetch order:", error)
+      } finally {
+        setLoading(false)
+      }
     }
-  }
 
-  fetchOrder()
-}, [orderId])
-
+    fetchOrder()
+  }, [orderId])
 
   if (loading) {
     return (
@@ -58,6 +57,9 @@ export default function CheckoutSuccessPage() {
       </div>
     )
   }
+
+  // ✅ Move parsing inside the component, after `order` is set
+  const parsedItems = order.items ? JSON.parse(order.items) : [];
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
@@ -118,22 +120,26 @@ export default function CheckoutSuccessPage() {
           <div>
             <h3 className="font-medium mb-4">Items</h3>
             <div className="space-y-4">
-              {order.items.map((item, index) => (
-                <div key={index} className="flex gap-4 border-b pb-4">
-                  <div className="w-16 h-16 rounded overflow-hidden flex-shrink-0 bg-muted flex items-center justify-center">
-                    <Package className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-medium">{item.name}</h4>
-                    <div className="flex justify-between text-sm text-muted-foreground">
-                      <span>
-                        {item.quantity} × ${item.price.toFixed(2)}
-                      </span>
-                      <span>${(item.price * item.quantity).toFixed(2)}</span>
+              {Array.isArray(parsedItems) ? (
+                parsedItems.map((item, index) => (
+                  <div key={index} className="flex gap-4 border-b pb-4">
+                    <div className="w-16 h-16 rounded overflow-hidden flex-shrink-0 bg-muted flex items-center justify-center">
+                      <Package className="h-8 w-8 text-muted-foreground" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-medium">{item.name}</h4>
+                      <div className="flex justify-between text-sm text-muted-foreground">
+                        <span>
+                          {item.quantity} × ${item.price.toFixed(2)}
+                        </span>
+                        <span>${(item.price * item.quantity).toFixed(2)}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p className="text-muted-foreground">No items found in this order.</p>
+              )}
             </div>
           </div>
 
@@ -168,4 +174,3 @@ export default function CheckoutSuccessPage() {
     </div>
   )
 }
-
